@@ -6,7 +6,7 @@ RSpec.describe Image, type: :model do
   end
 
   describe 'Associations' do
-    it { should have_one(:file) }
+    it { should have_one(:file_attachment) }
   end
 
   # describe 'Attachment' do
