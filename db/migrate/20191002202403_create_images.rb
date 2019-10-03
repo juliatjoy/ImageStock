@@ -1,8 +1,6 @@
 class CreateImages < ActiveRecord::Migration[5.2]
   def change
-    create_table :images do |t|
-      t.string :uuid
-
+    create_table :images, id: :uuid do |t|
       t.timestamps
     end
   end
