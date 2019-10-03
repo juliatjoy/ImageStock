@@ -1,4 +1,24 @@
 class ImagesController < ApplicationController
+  def show
+    @image = Image.find_by(id: params[:id])
+    if @image
+      render json: {
+        data: {
+          status: 200,
+          id: @image.id,
+          image: @image.file_attachment
+                       .as_json.merge(image_url: url_for(@image.file))
+        }
+      }
+    else
+      render json: {
+        data: {
+          status: 404
+        }
+      }
+    end
+  end
+
   def create
     if params && params[:data] && params[:data][:image_url].present?
       parsed_file  = URI.parse(params[:data][:image_url])

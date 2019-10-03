@@ -1,7 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe 'Images API', type: :request do
-  let(:image) { create(:image) }
+  let(:image) { create(:image, :with_file) }
+
+  describe 'Get /images/:id' do
+    let(:image_id) { image.id }
+    before { get "/images/#{image_id}" }
+
+    context 'when the record exists' do
+      it 'returns the image' do
+        expect(JSON.parse(response.body)['data']['image']).not_to be_nil
+        expect(JSON.parse(response.body)['data']['id']).to eq(image_id)
+      end
+
+      it 'returns status code 200' do
+        expect(JSON.parse(response.body)['data']['status']).to eq(200)
+      end
+    end
+
+    context 'when the record doesnot exists' do
+      let(:image_id) { 100 }
+      it 'returns the image' do
+        expect(JSON.parse(response.body)['data']['image']).to be_nil
+        expect(JSON.parse(response.body)['data']['id']).to be_nil
+      end
+
+      it 'returns status code 200' do
+        expect(JSON.parse(response.body)['data']['status']).to eq(404)
+      end
+    end
+  end
 
   describe 'POST /image' do
     let(:image_from_local) { { data: { image_url: '/uploads/image.jpg' } } }
