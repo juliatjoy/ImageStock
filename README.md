@@ -5,20 +5,29 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
 * Database creation
+  ** We are using PostgresSQL
+## APP Documentation
 
-* Database initialization
+We have two crud method they are image creation and retrieval.
 
-* How to run the test suite
+* create image
 
-* Services (job queues, cache servers, search engines, etc.)
+POST '/images'
 
-* Deployment instructions
+{
+  data: {
+    image_url: **external url/path of image inside public folder
+  }
+}
 
+* Retrieve image
+
+GET '/images:id'
+
+{
+  data: {
+    id: image_id
+  }
+}
 * ...
